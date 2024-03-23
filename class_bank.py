@@ -37,33 +37,22 @@ def send_money():
     sender_username = input('Enter your username: ')
     sender_password = input('Enter your password: ')
     
-    sender_account = None
-    for account in total_account:
-        if account.name == sender_username and account.password == sender_password:
-            sender_account = account
-            break
-
-    if sender_account:
-        receiver_username = input('Enter the username of the account you want to send money to: ')
-        
-        receiver_account = None
-        for account in total_account:
-            if account.name == receiver_username:
-                receiver_account = account
-                break
-
-        if receiver_account:
-            amount = float(input('Enter the amount you want to send: '))
-            if sender_account.balance >= amount:
-                sender_account.withdraw(amount)
-                receiver_account.deposit(amount)
-                print(f"Amount {amount} sent to {receiver_account.name}'s account.")
-            else:
-                print("Insufficient balance.")
+    for account1 in total_account:
+        if account1.name == sender_username and account1.password == sender_password:
+            receiver_username = input('Enter the username of the account you want to send money to: ')
+            for account2 in total_account:
+                if account2.name == receiver_username:
+                    amount = float(input('Enter the amount you want to send: '))
+                    if account1.balance >= amount:
+                        account1.withdraw(amount)
+                        account2.deposit(amount)
+                        print(f"Amount {amount} sent to {account2.name}'s account.")
+                    else:
+                        print("Insufficient balance.")
+                else:
+                    print("Receiver account not found.")
         else:
-            print("Receiver account not found.")
-    else:
-        print("Sender account not found.")
+            print("Sender account not found.")
 
 print('Welcome to our Bank!! How can I help you?')
 
